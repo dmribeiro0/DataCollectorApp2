@@ -100,3 +100,47 @@ class UFRGSObserver : ITempObserver
         Console.WriteLine($"UFRGS Observer: Temperature updated to {temp}°C");
     }
 }
+
+// USP only observes pH, so it implements only the pH observer interface
+class USPObserver : IPHObserver
+{
+    public void UpdatePH(double pH)
+    {
+        Console.WriteLine($"USP Observer: PH updated to {pH}");
+    }
+}
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        Console.WriteLine("=== Observer Pattern Demo: Data Collector ===\n");
+
+        // Subject
+        DataCollector collector = new DataCollector();
+
+        // Observers
+        UNIFESPObserver unifesp = new UNIFESPObserver();
+        UFRGSObserver ufrgs = new UFRGSObserver();
+        USPObserver usp = new USPObserver();
+
+        Console.WriteLine("Registering observers...");
+        collector.AddTempObserver(unifesp);
+        collector.AddPHObserver(unifesp);
+        collector.AddTempObserver(ufrgs);
+        collector.AddPHObserver(usp);
+
+        Console.WriteLine("\nPublishing first set of measurements:");
+        collector.SetTemperature(23.5);
+        collector.SetPH(7.1);
+
+        Console.WriteLine("\nRemoving UFRGS from temperature notifications...");
+        collector.RemoveTempObserver(ufrgs);
+
+        Console.WriteLine("\nPublishing second set of measurements:");
+        collector.SetTemperature(25.0);
+        collector.SetPH(6.8);
+
+        Console.WriteLine("\nDemo finished.");
+    }
+}
