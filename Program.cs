@@ -72,3 +72,26 @@ interface IPHObserver
 {
     void UpdatePH(double pH);
 }
+
+// UNIFESP observes both temperature and PH, so it implements both interfaces
+class UNIFESPObserver : ITempObserver, IPHObserver
+{
+    public void UpdateTemperature(double temp)
+    {
+        Console.WriteLine($"UNIFESP Observer: Temperature updated to {temp}°C");
+    }
+
+    public void UpdatePH(double pH)
+    {
+        Console.WriteLine($"UNIFESP Observer: PH updated to {pH}");
+    }
+}
+
+// UFRGS only observes temperature, so it implements only the temperature observer interface
+class UFRGSObserver : ITempObserver
+{
+    public void UpdateTemperature(double temp)
+    {
+        Console.WriteLine($"UFRGS Observer: Temperature updated to {temp}°C");
+    }
+}
