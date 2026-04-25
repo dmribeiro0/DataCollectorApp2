@@ -1,5 +1,5 @@
 ﻿// Data Collector class
-// This is the model / subject class
+// This is the model/subject class
 // Uses specific observer interfaces for each data
 // Adds flexibility, closed to modification, open to extension
 class DataCollector
@@ -9,7 +9,7 @@ class DataCollector
     private List<ITempObserver> tempObservers = new List<ITempObserver>();
     private List<IPHObserver> pHObservers = new List<IPHObserver>();
 
-    // Temperature observer methods
+    // ==== Temperature observer methods ==== //
     public void AddTempObserver(ITempObserver observer)
     {
         tempObservers.Add(observer);
@@ -22,6 +22,11 @@ class DataCollector
 
     private void NotifyTempObservers()
     {
+        /**
+        /* This is where the inversion of control happens, the subject calls the observers and not the opposite.
+        /* Normally, if this was implemented as a library, the observers would call subject's methods to get the data.
+        /* Same happens on NotifyPHObservers, but for PH data.
+        **/
         foreach (var observer in tempObservers)
         {
             observer.UpdateTemperature(temperature);
@@ -34,7 +39,7 @@ class DataCollector
         NotifyTempObservers();
     }
 
-    // PH observer methods
+    // ==== PH observer methods ==== //
     public void AddPHObserver(IPHObserver observer)
     {
         pHObservers.Add(observer);
