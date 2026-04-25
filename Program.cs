@@ -60,3 +60,15 @@ class DataCollector
     }
 
 }
+
+// Temperature observer interface
+interface ITempObserver
+{
+    void UpdateTemperature(double temp);
+}
+
+// PH observer interface
+interface IPHObserver
+{
+    void UpdatePH(double pH);
+}
